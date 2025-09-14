@@ -38,6 +38,7 @@
 	<th>Remote Address</th>
 	<th>Active</th>
 	<th>Slow</th>
+	<th>Operations</th>
 </tr>
 </thead>
 <tbody>
@@ -49,6 +50,9 @@
 	<td><c:out value="${con.remoteAddress}" /></td>
 	<td><c:out value="${con.active}" /></td>
 	<td><c:out value="${con.slow}" /></td>
+	<td>
+		<a href="<c:url value="disconnectConnection.action"><c:param name="connectionID" value="${conName}"/><c:param name="secret" value='${sessionScope["secret"]}'/></c:url>">Disconnect</a>
+	</td>
 </tr>
 </jms:forEachConnection>
 </tbody>
