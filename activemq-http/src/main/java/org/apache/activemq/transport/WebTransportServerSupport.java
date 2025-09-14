@@ -27,6 +27,9 @@ import org.apache.activemq.util.IntrospectionSupport;
 import org.eclipse.jetty.security.ConstraintMapping;
 import org.eclipse.jetty.security.ConstraintSecurityHandler;
 import org.eclipse.jetty.server.Connector;
+import org.eclipse.jetty.server.ForwardedRequestCustomizer;
+import org.eclipse.jetty.server.HttpConfiguration;
+import org.eclipse.jetty.server.HttpConnectionFactory;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.util.resource.Resource;
 import org.eclipse.jetty.util.security.Constraint;
@@ -122,6 +125,13 @@ abstract public class WebTransportServerSupport extends TransportServerSupport {
         securityHandler.addConstraintMapping(mapping);
     }
 
+    protected void configureHttpConnectionFactory(HttpConnectionFactory httpConnectionFactory) {
+        HttpConfiguration httpConfiguration = httpConnectionFactory.getHttpConfiguration();
+        httpConfiguration.setSendServerVersion(false);
+        if (httpOptions.isEnableForwardedRequestHandling())
+            httpConfiguration.addCustomizer(new ForwardedRequestCustomizer());
+    }
+
     public void setHttpOptions(Map<String, Object> options) {
         if (options != null) {
             IntrospectionSupport.setProperties(this.httpOptions, options);
@@ -136,6 +146,7 @@ abstract public class WebTransportServerSupport extends TransportServerSupport {
 
     protected static class HttpOptions {
         private boolean enableTrace = false;
+        private boolean enableForwardedRequestHandling = false;
 
         public boolean isEnableTrace() {
             return enableTrace;
@@ -143,6 +154,14 @@ abstract public class WebTransportServerSupport extends TransportServerSupport {
 
         public void setEnableTrace(boolean enableTrace) {
             this.enableTrace = enableTrace;
+        }
+
+        public boolean isEnableForwardedRequestHandling() {
+            return enableForwardedRequestHandling;
+        }
+
+        public void setEnableForwardedRequestHandling(boolean enableForwardedRequestHandling) {
+            this.enableForwardedRequestHandling = enableForwardedRequestHandling;
         }
     }
 

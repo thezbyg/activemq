@@ -69,7 +69,7 @@ public class WSTransportServer extends WebTransportServerSupport implements Brok
 
         for(ConnectionFactory cf  : connector.getConnectionFactories()) {
             if(HttpConnectionFactory.class.isAssignableFrom(cf.getClass())) {
-                HttpConnectionFactory.class.cast(cf).getHttpConfiguration().setSendServerVersion(false);
+                configureHttpConnectionFactory(HttpConnectionFactory.class.cast(cf));
             }
         }
 

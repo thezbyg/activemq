@@ -85,7 +85,7 @@ public class HttpTransportServer extends WebTransportServerSupport {
 
         for(ConnectionFactory cf  : connector.getConnectionFactories()) {
             if(HttpConnectionFactory.class.isAssignableFrom(cf.getClass())) {
-                HttpConnectionFactory.class.cast(cf).getHttpConfiguration().setSendServerVersion(false);
+                configureHttpConnectionFactory(HttpConnectionFactory.class.cast(cf));
             }
         }
 
