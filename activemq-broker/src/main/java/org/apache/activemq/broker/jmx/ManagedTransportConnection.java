@@ -81,6 +81,7 @@ public class ManagedTransportConnection extends TransportConnection {
         }
         if (clientId != null) {
             if (byClientIdName == null) {
+                ((ConnectionView) mbean).setClientId(clientId);
                 byClientIdName = createObjectName("clientId", clientId);
                 registerMBean(byClientIdName);
             }

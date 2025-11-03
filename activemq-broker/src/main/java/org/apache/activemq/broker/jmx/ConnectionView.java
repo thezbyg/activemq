@@ -30,6 +30,7 @@ public class ConnectionView implements ConnectionViewMBean {
     private final Connection connection;
     private final ManagementContext managementContext;
     private String userName;
+    private String clientId;
 
     public ConnectionView(Connection connection) {
         this(connection, null);
@@ -102,7 +103,11 @@ public class ConnectionView implements ConnectionViewMBean {
 
     @Override
     public String getClientId() {
-        return connection.getConnectionId();
+        return clientId;
+    }
+
+    public void setClientId(String clientId) {
+        this.clientId = clientId;
     }
 
     public String getConnectionId() {
